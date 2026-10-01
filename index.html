@@ -4,9 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Чат для OBS — Kick и Twitch с 7TV</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;700&family=Nunito:wght@600;800&family=Roboto:wght@500;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -37,7 +34,7 @@ span.badge svg{display:block;width:100%;height:100%;shape-rendering:geometricPre
 span.badge.txt{width:auto;min-width:1.3em;height:1.5em;padding:0 .3em;font-size:.72em;font-weight:800;line-height:1.5em;text-align:center;border-radius:.3em;background:#2b2f3d;color:#e9ecf5;vertical-align:.05em;text-shadow:none;filter:none}
 
 /* ---------- ОВЕРЛЕЙ ---------- */
-body.ov,body.ov html{background:transparent!important}
+body.ov{background:transparent!important}
 #ov{position:fixed;inset:0;padding:8px}
 
 /* ---------- КОНФИГУРАТОР ---------- */
@@ -51,8 +48,8 @@ body.cfg[data-p=twitch]{--accent:#8844ff;--accent-ink:#fff;--glow:rgba(136,68,25
 .card{width:100%;background:#11141d;border:1px solid #222735;border-radius:30px;padding:28px 22px}
 .narrow{max-width:520px}
 .tabs{display:flex;gap:10px;justify-content:center;margin-bottom:28px;flex-wrap:wrap}
-.tab{font:600 13px 'IBM Plex Mono',ui-monospace,monospace;color:#9aa0b4;background:transparent;border:2px solid var(--c);border-radius:999px;padding:10px 16px;cursor:pointer;opacity:.45;transition:opacity .15s,box-shadow .15s}
-.tab b{color:var(--c);margin-right:6px}
+.tab{font:600 13px 'IBM Plex Mono',ui-monospace,monospace;color:#9aa0b4;background:transparent;border:2px solid var(--c);border-radius:999px;padding:10px 16px;cursor:pointer;opacity:.7;transition:opacity .15s,box-shadow .15s}
+.tab b{color:var(--c)}
 .tab[data-p=kick]{--c:#8bff4f;--cg:rgba(139,255,79,.35)}
 .tab[data-p=twitch]{--c:#9a66ff;--cg:rgba(136,68,255,.45)}
 .tab.on{opacity:1;box-shadow:0 0 0 4px rgba(255,255,255,.03),0 0 22px var(--cg)}
@@ -65,23 +62,23 @@ h1{font-size:34px;font-weight:500;text-align:center;margin:0 0 14px;letter-spaci
 .inrow input.bad{border-color:#ff5d5d;box-shadow:0 0 0 4px rgba(255,93,93,.25)}
 .cta{width:100%;height:56px;border:0;border-radius:20px;background:var(--accent);color:var(--accent-ink);font:600 19px 'Inter',sans-serif;cursor:pointer;box-shadow:0 10px 30px var(--glow)}
 .cta:active{transform:translateY(1px)}
-.note{font:13px 'IBM Plex Mono',monospace;color:#6b7184;text-align:center;margin:18px 0 0;line-height:1.7}
+.note{font:13px 'IBM Plex Mono',monospace;color:#8f95a9;text-align:center;margin:18px 0 0;line-height:1.7}
 .note code{color:#c9ccd8}
 
 #s2{width:100%;max-width:1040px}
 .top{display:flex;align-items:center;gap:14px;margin:6px 0 14px}
-.back{background:#11141d;border:1px solid #262b38;color:#c9ccd8;border-radius:14px;padding:10px 14px;font:inherit;font-size:14px;cursor:pointer}
+.back{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#c9ccd8;border-radius:14px;padding:10px 14px;font:inherit;font-size:14px;cursor:pointer}
 .top h2{margin:0;font-size:20px;font-weight:600}
 .top h2 span{color:var(--accent)}
 .grid{display:grid;grid-template-columns:1fr;gap:14px}
-.pv{position:sticky;top:0;z-index:5;background:#07070c;padding:6px 0}
+.pv{position:sticky;top:0;z-index:5;background:transparent;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);padding:6px 0}
 .pvbar{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
-.st{font:12px 'IBM Plex Mono',monospace;padding:6px 10px;border-radius:999px;background:#151926;color:#9aa0b4}
+.st{font:12px 'IBM Plex Mono',monospace;padding:6px 12px;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);color:#b4b9cc}
 .st.ok{color:var(--accent)}.st.err{color:#ff7a7a}
-.chip{font:12px 'IBM Plex Mono',monospace;background:#11141d;color:#9aa0b4;border:1px solid #262b38;border-radius:999px;padding:6px 10px;cursor:pointer}
+.chip{font:12px 'IBM Plex Mono',monospace;background:rgba(255,255,255,.06);color:#b4b9cc;border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:6px 10px;cursor:pointer}
 .chip.on{color:#fff;border-color:var(--accent)}
 .pvbar .sp{flex:1}
-.pvbox{position:relative;height:250px;border-radius:22px;border:1px solid #222735;overflow:hidden;background:conic-gradient(#2b2e3a 25%,#20232d 0 50%,#2b2e3a 0 75%,#20232d 0) 0 0/24px 24px}
+.pvbox{position:relative;height:170px;border-radius:22px;border:1px solid #222735;overflow:hidden;background:conic-gradient(#2b2e3a 25%,#20232d 0 50%,#2b2e3a 0 75%,#20232d 0) 0 0/24px 24px}
 .pvbox[data-bg=dark]{background:#000}
 .pvbox[data-bg=light]{background:#c9d1dc}
 #pv{position:absolute;inset:0;padding:10px}
@@ -118,6 +115,11 @@ h1{font-size:34px;font-weight:500;text-align:center;margin:0 0 14px;letter-spaci
   .pvbox{height:560px}
 }
 @media(prefers-reduced-motion:reduce){.chat.anim .msg{animation:none}}
+button:focus-visible,select:focus-visible,summary:focus-visible,.row input:focus-visible{outline:2px solid var(--accent,#8bff4f);outline-offset:2px}
+.row input.bad{border-color:#ff5d5d}
+.chat .reply{display:block;font-size:.7em;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chat .msg.hi{outline:2px solid #ffd43b;outline-offset:-2px}
+.chat .msg.sys{background:rgba(136,68,255,.5);font-weight:600}
 </style>
 </head>
 <body>
@@ -127,17 +129,18 @@ h1{font-size:34px;font-weight:500;text-align:center;margin:0 0 14px;letter-spaci
 <div id="app" hidden>
   <section id="s1" class="card narrow">
     <div class="tabs">
-      <button class="tab" data-p="kick" type="button"><b>KICK</b>Чат для OBS</button>
-      <button class="tab" data-p="twitch" type="button"><b>TWITCH</b>Чат для OBS</button>
+      <button class="tab" data-p="kick" type="button"><b>KICK</b></button>
+      <button class="tab" data-p="twitch" type="button"><b>TWITCH</b></button>
     </div>
     <h1>Чат для OBS</h1>
     <p class="sub" id="sub"></p>
     <div class="inrow">
       <span class="pre" id="pre"></span>
-      <input id="ch" placeholder="nickname" autocomplete="off" autocapitalize="none" spellcheck="false">
+      <input id="ch" aria-label="Ник канала" placeholder="nickname" autocomplete="off" autocapitalize="none" spellcheck="false">
     </div>
     <button class="cta" id="go" type="button">Подключиться</button>
     <p class="note">Примечание: <code>nickname</code> может отличаться в ссылке.<br>Можно вставить ссылку на канал целиком.</p>
+    <details class="adv"><summary>Уже есть ссылка? Импорт настроек</summary><div class="row"><input type="text" id="imp" aria-label="Готовая ссылка для OBS" placeholder="Вставьте ссылку из OBS…" autocomplete="off" spellcheck="false"></div></details>
   </section>
 
   <section id="s2" hidden>
@@ -150,7 +153,7 @@ h1{font-size:34px;font-weight:500;text-align:center;margin:0 0 14px;letter-spaci
         <div class="pvbar">
           <span id="st" class="st">подключение…</span>
           <span class="sp"></span>
-          <button class="chip on" data-bg="checker" type="button">клетка</button>
+          <button class="chip on" data-bg="checker" aria-pressed="true" type="button">клетка</button>
           <button class="chip" data-bg="dark" type="button">тёмный</button>
           <button class="chip" data-bg="light" type="button">светлый</button>
           <button class="chip" id="demo" type="button">+ сообщение</button>
@@ -174,7 +177,7 @@ h1{font-size:34px;font-weight:500;text-align:center;margin:0 0 14px;letter-spaci
         <li>Фон прозрачный — свой CSS вставлять не нужно. Размер чата задаётся размером источника.</li>
         <li>Изменили настройки? Нажмите кнопку ещё раз и замените ссылку в OBS.</li>
       </ol>
-      <div class="warn" id="filewarn" hidden>Страница открыта как локальный файл. Ссылка будет работать только на этом компьютере. Чтобы пользоваться везде, выложите <code>obs-chat.html</code> на хостинг (GitHub Pages, Cloudflare Pages и т. п.).</div>
+      <div class="warn" id="filewarn" hidden>Страница открыта как локальный файл. Ссылка будет работать только на этом компьютере. Чтобы пользоваться везде, выложите этот HTML-файл на хостинг (GitHub Pages, Cloudflare Pages и т. п.).</div>
     </div>
   </section>
 </div>
@@ -188,18 +191,32 @@ const DEF = {
   p:'kick', c:'', cr:'', ku:'', sv:'',
   fs:22, ff:'Inter', tc:'ffffff', sh:1, cl:'inline',
   bgo:40, bgc:'000000', br:10, gap:6, an:1, dir:'b',
-  nm:1, bd:1, lv:0, bm:12, em:1, tv:1, es:1.5, hc:0, hu:'',
-  mx:40, fo:0
+  nm:1, bd:1, em:1, tv:1, es:1.5, hc:0, hu:'',
+  mx:40, fo:0, fc:'', hb:0, hl:0, rp:1, sn:1, mn:''
 };
 const KEYS = Object.keys(DEF);
+const BOOL = ['sh','an','nm','bd','em','tv','hc','hb','hl','rp','sn'];
+const RNG = {fs:[8,200], bgo:[0,100], br:[0,60], gap:[0,60], es:[.5,5], mx:[1,200], fo:[0,600]};
+const FONT_OK = /^[\w .-]{1,40}$/;
+function clampS(s){
+  for (const k in RNG) s[k] = Number.isFinite(+s[k]) ? Math.min(RNG[k][1], Math.max(RNG[k][0], +s[k])) : DEF[k];
+  for (const k of BOOL) s[k] = s[k] ? 1 : 0;
+  for (const k of ['tc','bgc']) { s[k] = String(s[k]).replace(/^#/, ''); if (!/^[0-9a-f]{6}$/i.test(s[k])) s[k] = DEF[k]; }
+  if (!['b','t'].includes(s.dir)) s.dir = 'b';
+  if (!['inline','stack'].includes(s.cl)) s.cl = 'inline';
+  if (s.p !== 'twitch') s.p = 'kick';
+  if (!FONT_OK.test(String(s.ff))) s.ff = 'Inter';
+  if (s.fc && !FONT_OK.test(String(s.fc))) s.fc = '';
+  return s;
+}
 
-function fromQuery(){
-  const q = new URLSearchParams(location.search), s = {...DEF};
+function fromQuery(search){
+  const q = new URLSearchParams(search == null ? location.search : search), s = {...DEF};
   for (const k of KEYS) if (q.has(k)) {
     const v = q.get(k);
     s[k] = typeof DEF[k] === 'number' ? (isNaN(+v) ? DEF[k] : +v) : v;
   }
-  return s;
+  return clampS(s);
 }
 function buildUrl(s){
   const u = new URLSearchParams();
@@ -212,6 +229,17 @@ function buildUrl(s){
 }
 
 /* ================= УТИЛИТЫ ================= */
+const F = (u, o) => window.fetch(u, {...o, signal: AbortSignal.timeout(4000)});
+const BOTS = new Set(['nightbot','streamelements','streamlabs','moobot','fossabot','wizebot','botrix','kickbot','sery_bot','soundalerts']);
+const LINK = /https?:\/\/|www\.|\b[a-z0-9-]+\.(?:com|ru|tv|gg|ly|me|io|net|org|xyz)\b/i;
+const GF = {'Inter':'Inter:wght@400;500;600;700','Roboto':'Roboto:wght@500;700','Montserrat':'Montserrat:wght@500;700','Nunito':'Nunito:wght@600;800','Oswald':'Oswald:wght@500;700','IBM Plex Mono':'IBM+Plex+Mono:wght@400;600'};
+const loadedF = new Set();
+function loadFont(f){
+  if (loadedF.has(f) || f === 'Arial' || f === 'Segoe UI') return; loadedF.add(f);
+  const l = document.createElement('link'); l.rel = 'stylesheet';
+  l.href = 'https://fonts.googleapis.com/css2?family=' + (GF[f] || encodeURIComponent(f).replace(/%20/g, '+')) + '&display=swap';
+  document.head.appendChild(l);
+}
 const PAL = ['#ff6b6b','#ffa94d','#ffd43b','#69db7c','#38d9a9','#4dabf7','#9775fa','#f783ac','#e599f7','#74c0fc'];
 function fixColor(c, n){
   if (!/^#[0-9a-f]{6}$/i.test(c || '')) {
@@ -230,7 +258,7 @@ function rgba(hex, a){
 }
 function applyStyle(root, s){
   root.style.fontSize = s.fs + 'px';
-  root.style.fontFamily = `'${s.ff}',system-ui,sans-serif`;
+  const f = s.fc || s.ff; loadFont(f); root.style.fontFamily = `'${f}',system-ui,sans-serif`;
   root.style.setProperty('--tc', '#' + s.tc);
   root.style.setProperty('--mbg', rgba(s.bgc, s.bgo/100));
   root.style.setProperty('--br', s.br + 'px');
@@ -281,20 +309,20 @@ function twitchParts(text, emotesTag){
 }
 
 /* ================= KICK ================= */
+const KICK_PROXY = ''; // свой прокси, например 'https://my-worker.workers.dev/?u='
 async function kickInfo(slug){
   const url = `https://kick.com/api/v2/channels/${slug}`;
-  const tries = [url, `https://corsproxy.io/?${encodeURIComponent(url)}`, `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`];
-  for (const u of tries) {
-    try {
-      const r = await fetch(u); if (!r.ok) continue;
-      const j = await r.json();
-      if (j && j.chatroom) {
-      const sb = (j.subscriber_badges || []).map(x => ({months: +x.months || 0, src: (x.badge_image && x.badge_image.src) || ''})).filter(x => /^https:\/\//.test(x.src)).sort((a, b) => a.months - b.months);
-      return {chatroom: j.chatroom.id, userId: j.user_id || (j.user && j.user.id) || 0, subBadges: sb};
-      }
-    } catch (e) {}
-  }
-  return null;
+  const one = async u => {
+    const r = await F(u); if (!r.ok) throw 0;
+    const j = await r.json(); if (!(j && j.chatroom && Number.isInteger(+j.chatroom.id) && +j.chatroom.id > 0)) throw 0;
+    return j;
+  };
+  const tries = KICK_PROXY ? [KICK_PROXY + encodeURIComponent(url)] : [url, `https://corsproxy.io/?${encodeURIComponent(url)}`, `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`];
+  try {
+    const j = await Promise.any(tries.map(one));
+    const sb = (j.subscriber_badges || []).map(x => ({months: +x.months || 0, src: (x.badge_image && x.badge_image.src) || ''})).filter(x => /^https:\/\//.test(x.src)).sort((a, b) => a.months - b.months);
+    return {chatroom: +j.chatroom.id, userId: j.user_id || (j.user && j.user.id) || 0, subBadges: sb};
+  } catch (e) { return null; }
 }
 const BI = {
   broadcaster:'<rect width="16" height="16" rx="3" fill="#e91916"/><rect x="6" y="2.5" width="4" height="7" rx="2" fill="#fff"/><path d="M4 8a4 4 0 008 0M8 12v2M5.5 14h5" stroke="#fff" stroke-width="1.2" fill="none"/>',
@@ -309,6 +337,15 @@ const BI = {
   sidekick:'<rect width="16" height="16" rx="3" fill="#2a0a0a"/><path d="M2 6.5c2-1.5 4-1 6 0 2-1 4-1.5 6 0l-1 3c-1.5 1-3 .5-5-.5-2 1-3.5 1.5-5 .5z" fill="#ff3b3b"/>'
 };
 BI.global_moderator = BI.moderator; BI.global_admin = BI.staff; BI.admin = BI.staff;
+const TW = {
+  broadcaster: BI.broadcaster,
+  moderator: '<rect width="16" height="16" rx="3" fill="#00ad03"/><path d="M13 3l-1 3-5 5-2-2 5-5z" fill="#fff"/><path d="M4.2 7.8l4 4M4 12l-1.5 1.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>',
+  vip: '<rect width="16" height="16" rx="3" fill="#e005b9"/><path d="M8 3l4.2 3L8 13 3.8 6z" fill="#fff"/>',
+  subscriber: '<rect width="16" height="16" rx="3" fill="#8a4dff"/><path d="M8 2.5l1.6 3.7 4 .4-3 2.7.9 3.9L8 11.1l-3.5 2.1.9-3.9-3-2.7 4-.4z" fill="#fff"/>',
+  founder: BI.founder,
+  partner: '<rect width="16" height="16" rx="3" fill="#9146ff"/><path d="M4.5 8.3l2.2 2.2 4.8-5" stroke="#fff" stroke-width="1.8" fill="none"/>',
+  verified: '<rect width="16" height="16" rx="3" fill="#9146ff"/><path d="M4.5 8.3l2.2 2.2 4.8-5" stroke="#fff" stroke-width="1.8" fill="none"/>'
+};
 function badgeImg(o){
   if (!o || typeof o !== 'object') return '';
   const c = [o.image && (typeof o.image === 'string' ? o.image : (o.image.src || o.image.url)), o.badge_image && (o.badge_image.src || o.badge_image.url), o.image_url, o.icon, o.src, o.url];
@@ -316,12 +353,15 @@ function badgeImg(o){
   return '';
 }
 function mkBadge(b){
-  if (b.img) { const i = new Image(); i.src = b.img; i.alt = ''; i.title = b.title || ''; i.className = 'badge'; i.style.borderRadius = '3px'; return i; }
+  if (b.img) { const i = new Image(); i.referrerPolicy = 'no-referrer'; i.src = b.img; i.alt = ''; i.title = b.title || ''; i.className = 'badge'; i.style.borderRadius = '3px'; return i; }
   const s = document.createElement('span'); s.title = b.title || b.kick || '';
   const lv = /level|lvl/.test(b.kick || '') ? (String(b.count || '').replace(/\D/g, '') || String(b.title || '').replace(/\D/g, '')).slice(0, 3) : '';
   if (lv) {
     s.className = 'badge';
     s.innerHTML = '<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M8 .8l6.2 3.6v7.2L8 15.2l-6.2-3.6V4.4z" fill="#f5b81c" stroke="#7a4a00" stroke-width=".8"/><text x="8" y="' + (lv.length > 2 ? 10 : 10.8) + '" font-size="' + (lv.length > 2 ? 5.6 : 7.6) + '" font-weight="900" text-anchor="middle" fill="#2e1c00" font-family="Arial,sans-serif">' + lv + '</text></svg>';
+  } else if (b.tw && Object.prototype.hasOwnProperty.call(TW, b.tw)) {
+    s.className = 'badge';
+    s.innerHTML = '<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">' + TW[b.tw] + '</svg>';
   } else if (b.kick && Object.prototype.hasOwnProperty.call(BI, b.kick)) {
     s.className = 'badge';
     s.innerHTML = '<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">' + BI[b.kick] + '</svg>';
@@ -338,32 +378,64 @@ class Chat {
     this.tbadges = {}; this.alive = true; this.onStatus = () => {}; this.raw = new Map(); this.onRaw = null;
     applyStyle(root, s);
   }
-  set(s){ this.s = s; applyStyle(this.root, s); }
+  set(s){ this.s = s; applyStyle(this.root, s); this.fit(); }
   clear(){ this.root.textContent = ''; }
-  stop(){ this.alive = false; clearInterval(this.timer); try { this.ws && this.ws.close(); } catch (e) {} }
+  stop(){ this.alive = false; clearInterval(this.timer); clearInterval(this.wdt); try { this.ws && this.ws.close(); } catch (e) {} }
   status(t, c){
-    if (c === 'ok') this.base = t;
-    this.onStatus(c === 'ok' && this.tvN != null ? t + this.tvText() : t, c);
+    if (!this.alive) return;
+    this.conn = c === 'ok'; if (this.conn) this.base = t;
+    this.onStatus(this.conn && this.tvN != null ? t + this.tvText() : t, c);
   }
-  tvText(){ return ' · 7TV канала: ' + this.tvN + (this.tvN ? '' : ' (вставьте ссылку на набор в «Дополнительно»)'); }
-  tvDone(){ this.tvN = this.cmap.size; if (this.base) this.onStatus(this.base + this.tvText(), 'ok'); }
+  tvText(){ return ' · 7TV: ' + this.gmap.size + ' глоб. / ' + this.cmap.size + ' канал' + (this.cmap.size ? '' : ' (вставьте ссылку на набор в «Дополнительно»)'); }
+  tvDone(){ this.tvN = 1; if (this.alive && this.conn) this.onStatus(this.base + this.tvText(), 'ok'); }
+  async ready(){
+    if (this.doneAll || this.waited) return;
+    const all = Promise.allSettled([this.gp, this.chP, this.badgesP].filter(Boolean));
+    await Promise.race([all, new Promise(r => setTimeout(r, 2500))]);
+    this.waited = true;
+    if (this.chP) all.then(() => { this.doneAll = true; });
+  }
+  reopen(open){
+    if (!this.alive) return;
+    this.status('переподключение…', 'wait');
+    this.tries = (this.tries || 0) + 1;
+    setTimeout(open, Math.min(30000, 1000 * 2 ** (this.tries - 1)));
+  }
+  bind(ws, ping, open){
+    this.last = Date.now(); clearInterval(this.wdt);
+    ws.addEventListener('message', () => { this.last = Date.now(); this.tries = 0; });
+    this.wdt = setInterval(() => {
+      if (!this.alive || ws !== this.ws) return;
+      if (Date.now() - this.last > 120000) { this.last = Date.now(); ws.onclose = null; try { ws.close(); } catch (e) {} this.reopen(open); return; }
+      if (ws.readyState === 1) try { ws.send(ping); } catch (e) {}
+    }, 30000);
+  }
+  fit(){
+    const r = this.root, cs = getComputedStyle(r), avail = r.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    if (!(avail > 0)) return;
+    const g = parseFloat(cs.rowGap) || 0; let h = -g;
+    for (const e of r.children) h += e.offsetHeight + g;
+    while (r.children.length > 1 && h > avail) { const e = r.firstChild; h -= e.offsetHeight + g; e.remove(); }
+  }
   lg(k, v){ this.raw.set(k, v); this.onRaw && this.onRaw(); }
   start(){
-    this.load7tv('https://7tv.io/v3/emote-sets/global', this.gmap);
+    this.gp = this.load7tv('https://7tv.io/v3/emote-sets/global', this.gmap).then(() => { this.lg('7tv-glob', '7TV: глобальных смайлов ' + this.gmap.size + (this.gmap.size ? '' : ' (7tv.io недоступен?)')); this.tvDone(); });
     this.s.p === 'twitch' ? this.twitch() : this.kick();
   }
 
   async load7tv(url, map){
-    try {
-      const r = await fetch(url); if (!r.ok) return 0;
-      const j = await r.json();
-      const list = j.emotes || (j.emote_set && j.emote_set.emotes) || [];
-      for (const e of list) {
-        const zw = ((e.flags || 0) & 1) || (((e.data && e.data.flags) || 0) & 256);
-        map.set(e.name, {id: e.id, zw: !!zw});
-      }
-      return list.length;
-    } catch (e) { return 0; }
+    const ck = 'tv7:' + url, put = a => { for (const [i, n, z] of a) map.set(n, {id: i, zw: !!z}); };
+    for (const u of [url, url.replace('https://7tv.io', 'https://api.7tv.app')]) {
+      try {
+        const r = await F(u); if (!r.ok) continue;
+        const j = await r.json();
+        const a = (j.emotes || (j.emote_set && j.emote_set.emotes) || []).map(e => [e.id, e.name, (((e.flags || 0) & 1) || (((e.data && e.data.flags) || 0) & 256)) ? 1 : 0]);
+        put(a); try { localStorage.setItem(ck, JSON.stringify(a)); } catch (e) {}
+        return a.length;
+      } catch (e) {}
+    }
+    try { const a = JSON.parse(localStorage.getItem(ck) || 'null'); if (a) { put(a); return a.length; } } catch (e) {}
+    return 0;
   }
   async loadKick7tv(uid){
     for (const pl of ['kick', 'KICK']) if (await this.load7tv(`https://7tv.io/v3/users/${pl}/${uid}`, this.cmap)) return true;
@@ -374,7 +446,7 @@ class Chat {
     const names = [...new Set([slug, slug.replace(/-/g, '_'), slug.replace(/[-_]/g, '')])];
     for (const ep of ['https://7tv.io/v3/gql', 'https://api.7tv.app/v3/gql']) for (const n of names) {
       try {
-        const r = await fetch(ep, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({query: 'query($q:String!){users(query:$q){id username connections{id platform username display_name}}}', variables: {q: n}})});
+        const r = await F(ep, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({query: 'query($q:String!){users(query:$q){id username connections{id platform username display_name}}}', variables: {q: n}})});
         const j = await r.json();
         for (const u of (j.data && j.data.users) || []) for (const c of u.connections || [])
           if (String(c.platform).toUpperCase() === 'KICK' && norm(c.username) === norm(slug)) return c.id;
@@ -387,7 +459,7 @@ class Chat {
     const bySet = id => this.load7tv(`https://7tv.io/v3/emote-sets/${id}`, this.cmap);
     const byUser = async id => {
       try {
-        const j = await (await fetch(`https://7tv.io/v3/users/${id}`)).json();
+        const j = await (await F(`https://7tv.io/v3/users/${id}`)).json();
         const sid = (j.connections || []).map(c => c.emote_set_id || (c.emote_set && c.emote_set.id)).find(Boolean) || (j.emote_sets && j.emote_sets[0] && j.emote_sets[0].id);
         return sid ? await bySet(sid) : 0;
       } catch (e) { return 0; }
@@ -404,24 +476,30 @@ class Chat {
       p.v.split(/(\s+)/).forEach(tok => {
         if (!tok) return;
         const e = this.cmap.get(tok) || this.gmap.get(tok);
-        if (e) out.push({t:'emote', url:`https://cdn.7tv.app/emote/${e.id}/2x.webp`, name: tok, zw: e.zw});
+        if (e) out.push({t:'emote', id: e.id, url:`https://cdn.7tv.app/emote/${e.id}/2x.webp`, name: tok, zw: e.zw});
         else { const l = out[out.length-1]; if (l && l.t === 'text' && l._m) l.v += tok; else out.push({t:'text', v: tok, _m: true}); }
       });
     }
     return out;
   }
 
-  add(m){
+  add(m){ this.q = (this.q || Promise.resolve()).then(() => this._add(m)).catch(() => {}); }
+  async _add(m){
     const s = this.s;
-    if (s.hc && (m.text || '').trim().startsWith('!')) return;
-    if (s.hu && s.hu.toLowerCase().split(/[\s,]+/).filter(Boolean).includes(m.login)) return;
+    if (!m.sys) {
+      if (s.hc && (m.text || '').trim().startsWith('!')) return;
+      if (s.hu && s.hu.toLowerCase().split(/[\s,]+/).filter(Boolean).includes(m.login)) return;
+      if (s.hb && BOTS.has(m.login)) return;
+      if (s.hl && LINK.test(m.text || '')) return;
+    }
+    if (!m.demo) this.hasLive = true;
 
     const el = document.createElement('div'); el.className = 'msg';
     if (m.id) el.dataset.id = m.id;
     el.dataset.login = m.login || '';
 
     const head = document.createElement('span'); head.className = 'head';
-    (m.badges || []).filter(b => s.lv || !b.level).slice(0, s.bm).forEach(b => head.appendChild(mkBadge(b)));
+    (m.badges || []).forEach(b => head.appendChild(mkBadge(b)));
     const nm = document.createElement('span'); nm.className = 'name';
     nm.textContent = m.name; nm.style.color = fixColor(m.color, m.name);
     head.appendChild(nm);
@@ -437,7 +515,11 @@ class Chat {
     for (const p of parts) {
       if (p.t === 'emote') {
         if (p.n && !s.em) { body.appendChild(document.createTextNode(p.name)); last = null; continue; }
-        const img = new Image(); img.src = p.url; img.alt = p.name; img.className = 'emote';
+        const img = new Image(); img.referrerPolicy = 'no-referrer'; img.src = p.url; img.alt = p.name; img.className = 'emote';
+        if (p.id) {
+          const fb = ['2x.avif', '2x.png', '2x.gif', '3x.webp', '1x.webp']; let fi = 0;
+          img.onerror = () => { if (fi < fb.length) img.src = `https://cdn.7tv.app/emote/${p.id}/${fb[fi++]}`; else this.lg('img', 'Картинки смайлов 7TV не загружаются: проверьте доступ к cdn.7tv.app'); };
+        }
         if (p.zw && last) { img.classList.add('zw'); last.appendChild(img); continue; }
         const st = document.createElement('span'); st.className = 'estack'; st.appendChild(img);
         body.appendChild(st); last = st;
@@ -446,9 +528,15 @@ class Chat {
         if (p.v.trim()) last = null;
       }
     }
-    el.append(head, body);
+    if (m.reply && s.rp) { const rp = document.createElement('span'); rp.className = 'reply'; rp.textContent = '↪ ' + m.reply.name + ': ' + m.reply.text; el.appendChild(rp); }
+    if (m.sys) { el.classList.add('sys'); el.appendChild(body); } else el.append(head, body);
+    if (s.mn && s.mn.toLowerCase().split(/[\s,]+/).filter(Boolean).some(w => (m.text || '').toLowerCase().includes(w))) el.classList.add('hi');
+    const imgs = [...el.querySelectorAll('img')];
+    if (imgs.length) await Promise.race([Promise.all(imgs.map(i => i.decode().catch(() => {}))), new Promise(r => setTimeout(r, 700))]);
+    if (!this.alive) return;
     this.root.appendChild(el);
     while (this.root.children.length > s.mx) this.root.firstChild.remove();
+    this.fit();
     if (s.fo > 0) setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 750); }, s.fo * 1000);
   }
   delId(id){ this.root.querySelectorAll('.msg').forEach(e => { if (e.dataset.id === id) e.remove(); }); }
@@ -461,6 +549,7 @@ class Chat {
       if (!this.alive) return;
       this.status('подключение…', 'wait');
       const ws = this.ws = new WebSocket('wss://irc-ws.chat.twitch.tv:443');
+      this.bind(ws, 'PING :keepalive', open);
       ws.onopen = () => {
         ws.send('CAP REQ :twitch.tv/tags twitch.tv/commands');
         ws.send('PASS SCHMOOPIIE');
@@ -468,11 +557,11 @@ class Chat {
         ws.send('JOIN #' + ch);
       };
       ws.onmessage = ev => String(ev.data).split('\r\n').forEach(l => l && this.onIrc(l, ws, ch));
-      ws.onclose = () => { if (this.alive) { this.status('переподключение…', 'wait'); setTimeout(open, 3000); } };
+      ws.onclose = () => this.reopen(open); ws.onerror = () => {};
     };
     open();
   }
-  onIrc(line, ws, ch){
+  async onIrc(line, ws, ch){
     const m = parseIrc(line), t = m.tags;
     switch (m.cmd) {
       case 'PING': ws.send('PONG :tmi.twitch.tv'); break;
@@ -480,33 +569,52 @@ class Chat {
         this.status('подключено: ' + ch, 'ok');
         if (!this.roomId && t['room-id']) {
           this.roomId = t['room-id'];
-          this.loadCh = async () => { await this.load7tv(`https://7tv.io/v3/users/twitch/${this.roomId}`, this.cmap); this.tvDone(); };
-          this.loadCh(); this.timer = setInterval(() => this.loadCh(), 300000);
-          this.loadBadges(this.roomId);
+          this.loadCh = async () => {
+            if (this.s.sv) { const n = await this.loadBySv(this.s.sv); this.lg('7tv-sv', '7TV: по ссылке загружено смайлов: ' + (n || 0)); }
+            await this.load7tv(`https://7tv.io/v3/users/twitch/${this.roomId}`, this.cmap);
+            this.lg('7tv-uid', '7TV: Twitch ID = ' + this.roomId);
+            this.lg('7tv-cnt', '7TV: смайлов канала ' + this.cmap.size + ', глобальных ' + this.gmap.size);
+            this.tvDone();
+          };
+          this.chP = this.loadCh(); this.timer = setInterval(() => this.loadCh(), 300000);
+          this.badgesP = this.loadBadges(this.roomId, ch);
         }
         break;
       case 'PRIVMSG': {
+        await this.ready();
         let text = m.trailing || '', action = false;
         const am = text.match(/^\x01ACTION (.*)\x01$/);
         if (am) { action = true; text = am[1]; }
         const login = m.prefix.split('!')[0];
         const badges = (t.badges || '').split(',').filter(Boolean)
-          .map(b => this.tbadges[b] ? {img: this.tbadges[b], title: b} : null).filter(Boolean);
-        this.add({id: t.id, login, name: t['display-name'] || login, color: t.color, badges, text, action, parts: twitchParts(text, t.emotes)});
+          .map(b => this.tbadges[b] ? {img: this.tbadges[b], title: b} : (TW[b.split('/')[0]] ? {tw: b.split('/')[0], title: b.split('/')[0]} : null)).filter(Boolean);
+        this.add({id: t.id, login, name: t['display-name'] || login, color: t.color, badges, text, action, parts: twitchParts(text, t.emotes), reply: t['reply-parent-msg-body'] ? {name: t['reply-parent-display-name'] || '', text: t['reply-parent-msg-body']} : null});
         break;
       }
       case 'CLEARCHAT': if (m.trailing) this.delUser(m.trailing.toLowerCase()); else this.clear(); break;
+      case 'USERNOTICE':
+        if (this.s.sn && t['system-msg']) { await this.ready(); this.add({sys: true, login: '', name: '', badges: [], text: '', parts: [{t:'text', v: t['system-msg'] + (m.trailing ? ' — ' + m.trailing : '')}]}); }
+        break;
       case 'CLEARMSG': if (t['target-msg-id']) this.delId(t['target-msg-id']); break;
     }
   }
-  async loadBadges(id){
-    for (const u of ['https://badges.twitch.tv/v1/badges/global/display', `https://badges.twitch.tv/v1/badges/channels/${id}/display`]) {
-      try {
-        const j = await (await fetch(u)).json();
-        for (const [set, v] of Object.entries(j.badge_sets || {}))
-          for (const [ver, d] of Object.entries(v.versions)) this.tbadges[set + '/' + ver] = d.image_url_2x;
-      } catch (e) {}
+  async loadBadges(id, login){
+    const getJ = async (u, o) => { try { const r = await F(u, o); return r.ok ? await r.json() : null; } catch (e) { return null; } };
+    const put = (set, ver, u) => { if (set != null && ver != null && /^https:\/\//.test(u || '')) this.tbadges[set + '/' + ver] = u; };
+    const putA = a => { for (const set of (Array.isArray(a) ? a : (a && a.data) || [])) for (const v of set.versions || []) put(set.setID || set.set_id, v.id, v.image_url_2x || v.image_url_1x || v.image_url_4x); };
+    const putG = a => { for (const b of a || []) put(b.setID, b.version, b.imageURL); };
+    const n = () => Object.keys(this.tbadges).length;
+    let hasCh = false;
+    if (/^\d+$/.test(String(id))) {
+      const g = await getJ('https://gql.twitch.tv/gql', {method: 'POST', headers: {'Client-Id': 'kimne78kx3ncx6brgo4mv6wki5h1ko', 'Content-Type': 'application/json'}, body: JSON.stringify({query: `query{badges{setID version imageURL(size:DOUBLE)}user(id:"${id}"){broadcastBadges{setID version imageURL(size:DOUBLE)}}}`})});
+      const d = g && g.data;
+      if (d) { putG(d.badges); putG(d.user && d.user.broadcastBadges); hasCh = !!d.user; }
     }
+    if (n() < 5) putA(await getJ('https://api.ivr.fi/v2/twitch/badges/global'));
+    if (!hasCh) putA(await getJ(`https://api.ivr.fi/v2/twitch/badges/channel?login=${encodeURIComponent(login)}`));
+    this.lg('tw-badges', 'Twitch: загружено картинок значков ' + n());
+    this.btries = (this.btries || 0) + 1;
+    if (!n() && this.alive && this.btries < 4) setTimeout(() => this.alive && this.loadBadges(id, login), 20000);
   }
 
   /* ----- Kick ----- */
@@ -530,11 +638,12 @@ class Chat {
       this.lg('7tv-cnt', '7TV: смайлов канала ' + this.cmap.size + ', глобальных ' + this.gmap.size);
       this.tvDone();
     };
-    this.loadCh(); this.timer = setInterval(() => this.loadCh(), 300000);
+    this.chP = this.loadCh(); this.timer = setInterval(() => this.loadCh(), 300000);
     const open = () => {
       if (!this.alive) return;
       this.status('подключение…', 'wait');
       const ws = this.ws = new WebSocket('wss://ws-us2.pusher.com/app/32cbd69e4b950bf97679?protocol=7&client=js&version=8.4.0-rc2&flash=false');
+      this.bind(ws, JSON.stringify({event:'pusher:ping', data:{}}), open);
       ws.onmessage = ev => {
         let m; try { m = JSON.parse(ev.data); } catch (e) { return; }
         const ev_ = m.event;
@@ -545,12 +654,13 @@ class Chat {
         else if (ev_ === 'App\\Events\\MessageDeletedEvent') { try { const d = JSON.parse(m.data); d.message && this.delId(String(d.message.id)); } catch (e) {} }
         else if (ev_ === 'App\\Events\\UserBannedEvent') { try { const d = JSON.parse(m.data); d.user && this.delUser((d.user.username || '').toLowerCase()); } catch (e) {} }
       };
-      ws.onclose = () => { if (this.alive) { this.status('переподключение…', 'wait'); setTimeout(open, 3000); } };
+      ws.onclose = () => this.reopen(open); ws.onerror = () => {};
     };
     open();
   }
-  kickMsg(d){
-    const sd = d.sender || {}, idn = sd.identity || {}, text = d.content || '';
+  async kickMsg(d){
+    await this.ready();
+    const md = d.metadata || {}, sd = d.sender || {}, idn = sd.identity || {}, text = d.content || '';
     const parts = [], re = /\[emote:(\d+):([^\]]+)\]/g; let i = 0, mt;
     while ((mt = re.exec(text))) {
       if (mt.index > i) parts.push({t:'text', v: text.slice(i, mt.index)});
@@ -567,7 +677,8 @@ class Chat {
       if (!img && type === 'subscriber' && sub.length) {
         let pick = sub[0]; for (const x of sub) if (x.months <= (+o.count || 0)) pick = x; img = pick.src;
       }
-      if (o.equipped === false || o.active === false || o.enabled === false || o.is_equipped === false || o.selected === false || o.hidden === true) return;
+      // показываем только то, что у человека реально включено в чате Kick
+      if (Object.entries(o).some(([k, v]) => (v === false && /equip|activ|enabl|select|show|visib|display/i.test(k)) || (v === true && /hidden|disabled/i.test(k)))) return;
       const level = /level|lvl|уров/i.test(type + ' ' + (o.text || '') + ' ' + img) || Object.keys(o).some(k => /level|lvl/i.test(k));
       const key = type + '|' + (o.text || '') + '|' + (o.count || '') + '|' + img;
       if (seen.has(key)) return; seen.add(key);
@@ -576,14 +687,14 @@ class Chat {
     if (!this.raw.has('identity-keys')) { this.raw.set('identity-keys', 'identity: ' + Object.keys(idn).join(', ') + ' | sender: ' + Object.keys(sd).join(', ')); this.onRaw && this.onRaw(); }
     for (const src of [idn, sd]) for (const v of Object.values(src)) if (Array.isArray(v)) v.forEach(pushB);
     if (!this.kickUid && sd.id && badges.some(b => b.kick === 'broadcaster')) { this.kickUid = sd.id; this.lg('7tv-uid', '7TV: Kick ID = ' + sd.id + ' (сообщение стримера)'); this.loadKick7tv(sd.id).then(() => { this.lg('7tv-cnt', '7TV: смайлов канала ' + this.cmap.size + ', глобальных ' + this.gmap.size); this.tvDone(); }); }
-    this.add({id: String(d.id), login: (sd.username || '').toLowerCase(), name: sd.username || '?', color: idn.color, badges, text, parts});
+    this.add({id: String(d.id), login: (sd.username || '').toLowerCase(), name: sd.username || '?', color: idn.color, badges, text, parts, reply: md.original_message ? {name: (md.original_sender || {}).username || '', text: md.original_message.content || ''} : null});
   }
 }
 
 /* ================= ДЕМО ================= */
 const T = v => ({t:'text', v});
 const DEMO = [
-  {name:'Zритель_01', color:'#ff7a59', badges:[{kick:'level', count:30, title:'Уровень 30', level:true}], parts:[T('Всем привет! Отличный стрим')]},
+  {name:'Зритель_01', color:'#ff7a59', badges:[{kick:'level', count:30, title:'Уровень 30'}], parts:[T('Всем привет! Отличный стрим')]},
   {name:'KappaFan', color:'#59b6ff', parts:[T('Крутой оверлей '), {t:'emote', n:true, url:'https://static-cdn.jtvnw.net/emoticons/v2/25/default/dark/2.0', name:'Kappa'}]},
   {name:'Модератор', color:'#53fc18', badges:[{kick:'moderator', title:'Модератор'}], parts:[T('Не забывайте про правила чата')]},
   {name:'LongMessage', color:'#c77dff', badges:[{kick:'subscriber', title:'Подписчик'}], parts:[T('Длинное сообщение, чтобы проверить перенос строк, отступы и размер шрифта при разных настройках')]},
@@ -592,7 +703,7 @@ const DEMO = [
 let demoI = 0;
 function demoMsg(chat){
   const d = DEMO[demoI++ % DEMO.length];
-  chat.add({id: 'demo' + Date.now() + demoI, login: d.name.toLowerCase(), name: d.name, color: d.color, badges: d.badges || [], text: d.parts.map(p => p.v || '').join(''), parts: d.parts.map(p => ({...p}))});
+  chat.add({demo: true, id: 'demo' + Date.now() + demoI, login: d.name.toLowerCase(), name: d.name, color: d.color, badges: d.badges || [], text: d.parts.map(p => p.v || '').join(''), parts: d.parts.map(p => ({...p}))});
 }
 
 /* ================= ОВЕРЛЕЙ-РЕЖИМ ================= */
@@ -609,11 +720,12 @@ if (params.get('c')) {
 /* ================= КОНФИГУРАТОР ================= */
 document.body.classList.add('cfg');
 document.getElementById('app').hidden = false;
+loadFont('Inter'); loadFont('IBM Plex Mono');
 const $ = s => document.querySelector(s);
 const FONTS = ['Inter','Roboto','Montserrat','Nunito','Oswald','IBM Plex Mono','Arial','Segoe UI'];
 let S = {...DEF}, chat = null;
 
-try { const sv = JSON.parse(localStorage.getItem('obschat.v1') || 'null'); if (sv) for (const k of KEYS) if (k in sv && typeof sv[k] === typeof DEF[k]) S[k] = sv[k]; } catch (e) {}
+try { const sv = JSON.parse(localStorage.getItem('obschat.v1') || 'null'); if (sv) for (const k of KEYS) if (k in sv && typeof sv[k] === typeof DEF[k]) S[k] = sv[k]; clampS(S); } catch (e) {}
 const save = () => { try { localStorage.setItem('obschat.v1', JSON.stringify(S)); } catch (e) {} };
 
 const SCHEMA = [
@@ -622,7 +734,8 @@ const SCHEMA = [
     ['ff','select','Шрифт',FONTS],
     ['tc','color','Цвет текста'],
     ['sh','check','Тень у текста'],
-    ['cl','select','Расположение ника',[['inline','Ник и текст в строку'],['stack','Ник над текстом']]]
+    ['cl','select','Расположение ника',[['inline','Ник и текст в строку'],['stack','Ник над текстом']]],
+    ['fc','text','Свой шрифт (название, заменяет выбор выше)']
   ]],
   ['Сообщения', [
     ['bgo','range','Непрозрачность фона сообщений',0,100,1,'%'],
@@ -635,12 +748,15 @@ const SCHEMA = [
   ['Содержимое', [
     ['nm','check','Цветные ники'],
     ['bd','check','Значки (бейджи)'],
-    ['lv','check','Показывать уровень (Level) Kick'],
-    ['bm','range','Максимум значков у ника',1,12,1,''],
     ['em','check','Смайлы платформы'],
     ['tv','check','Смайлы 7TV'],
     ['es','range','Размер смайлов',1,3,0.1,'×'],
     ['hc','check','Скрывать команды (начинаются с !)'],
+    ['hb','check','Скрывать популярных ботов'],
+    ['hl','check','Скрывать сообщения со ссылками'],
+    ['rp','check','Показывать ответы (reply)'],
+    ['sn','check','События Twitch: подписки, рейды'],
+    ['mn','text','Подсвечивать сообщения со словами (через запятую)'],
     ['hu','text','Скрыть пользователей (через запятую)']
   ]],
   ['Поведение', [
@@ -652,7 +768,7 @@ const ADV = [['cr','text','Chatroom ID'],['ku','text','Kick User ID (для 7TV)
 
 function ctl(it){
   const [k, type, label, a, b, c, u] = it;
-  const row = document.createElement('div'); row.className = 'row' + (type === 'check' || type === 'color' ? ' inl' : '');
+  const row = document.createElement('label'); row.className = 'row' + (type === 'check' || type === 'color' ? ' inl' : '');
   const lab = document.createElement('div'); lab.className = 'lab';
   const lt = document.createElement('span'); lt.textContent = label; lab.appendChild(lt);
   let inp, val;
@@ -679,7 +795,7 @@ function ctl(it){
   } else {
     inp = document.createElement('input'); inp.type = 'text'; inp.value = S[k]; inp.autocomplete = 'off'; inp.spellcheck = false; inp.autocapitalize = 'none';
     const adv = k === 'cr' || k === 'ku' || k === 'sv';
-    inp.addEventListener(adv ? 'change' : 'input', () => { S[k] = inp.value.trim(); adv ? (save(), connect()) : changed(k); });
+    inp.addEventListener(adv || k === 'fc' ? 'change' : 'input', () => { S[k] = inp.value.trim(); adv ? (save(), connect(), refreshUrl()) : changed(k); });
     row.append(lab, inp);
   }
   return row;
@@ -690,27 +806,29 @@ function buildPanel(){
     const g = document.createElement('div'); g.className = 'grp'; g.textContent = title; p.appendChild(g);
     items.forEach(it => p.appendChild(ctl(it)));
   });
-  if (S.p === 'kick') {
-    const adv = document.createElement('details'); adv.className = 'adv';
-    adv.open = !!(S.cr || S.ku || S.sv);
-    const sm = document.createElement('summary'); sm.textContent = 'Дополнительно (Kick)'; adv.appendChild(sm);
-    const h = document.createElement('p'); h.className = 'hint';
-    h.textContent = '7TV подключается сам. Эти поля нужны, только если канал или смайлы не находятся: вставьте ссылку на набор (7tv.app/emote-sets/…) или профиль 7TV.';
-    adv.appendChild(h);
-    ADV.forEach(it => adv.appendChild(ctl(it)));
-    p.appendChild(adv);
-    const d = document.createElement('details'); d.className = 'dbg';
-    d.innerHTML = '<summary>Диагностика: значки и 7TV</summary><p class="hint">Здесь видно, как нашёлся 7TV и какие значки пришли из чата. Если что-то работает не так, скопируйте этот текст.</p><pre id="rawpre">пока пусто…</pre><button class="chip" id="rawcopy" type="button">Копировать</button>';
-    p.appendChild(d);
-    d.querySelector('#rawcopy').onclick = async () => { const t = $('#rawpre').textContent; try { await navigator.clipboard.writeText(t); } catch (e) {} };
-  }
+  const kick = S.p === 'kick';
+  const adv = document.createElement('details'); adv.className = 'adv';
+  adv.open = !!(S.cr || S.ku || S.sv);
+  const sm = document.createElement('summary'); sm.textContent = kick ? 'Дополнительно (Kick)' : 'Дополнительно (Twitch)'; adv.appendChild(sm);
+  const h = document.createElement('p'); h.className = 'hint';
+  h.textContent = '7TV подключается сам. Эти поля нужны, только если канал или смайлы не находятся: вставьте ссылку на набор (7tv.app/emote-sets/…) или профиль 7TV.';
+  adv.appendChild(h);
+  (kick ? ADV : ADV.filter(it => it[0] === 'sv')).forEach(it => adv.appendChild(ctl(it)));
+  p.appendChild(adv);
+  const d = document.createElement('details'); d.className = 'dbg';
+  d.innerHTML = '<summary>Диагностика: значки и 7TV</summary><p class="hint">Здесь видно, как нашёлся 7TV, сколько значков загрузилось и какие данные пришли из чата. Если что-то работает не так, скопируйте этот текст.</p><pre id="rawpre">пока пусто…</pre><button class="chip" id="rawcopy" type="button">Копировать</button>';
+  p.appendChild(d);
+  d.querySelector('#rawcopy').onclick = async () => { const t = $('#rawpre').textContent; try { await navigator.clipboard.writeText(t); } catch (e) {} };
+  if (chat && chat.raw.size) $('#rawpre').textContent = [...chat.raw.values()].join('\n');
 }
 function changed(k){
   save();
   if (!chat) return;
   chat.set(S);
-  if (k === 'em' || k === 'tv') seed();
+  if (k === 'em' || k === 'tv') chat.hasLive ? demoMsg(chat) : seed();
+  refreshUrl();
 }
+function refreshUrl(){ const oc = $('#outcard'); if (oc && !oc.hidden) $('#outurl').value = buildUrl(S); }
 function seed(){ chat.clear(); demoI = 0; for (let i = 0; i < 4; i++) demoMsg(chat); }
 function connect(){
   if (chat) chat.stop();
@@ -748,13 +866,18 @@ function go(){
   buildPanel(); connect(); window.scrollTo(0, 0);
 }
 $('#go').onclick = go;
+$('#imp').addEventListener('input', e => {
+  const el = e.target, v = el.value.trim(); el.classList.remove('bad'); if (!v) return;
+  try { const n = fromQuery(new URL(v).search); if (!n.c) throw 0; S = n; setPlatform(S.p); $('#ch').value = S.c; el.value = ''; go(); }
+  catch (er) { el.classList.add('bad'); }
+});
 $('#ch').addEventListener('input', e => e.target.classList.remove('bad'));
 $('#ch').addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
 $('#back').onclick = () => { if (chat) chat.stop(); chat = null; $('#s2').hidden = true; $('#s1').hidden = false; };
 
 /* --- экран 2 --- */
 document.querySelectorAll('.chip[data-bg]').forEach(b => b.onclick = () => {
-  document.querySelectorAll('.chip[data-bg]').forEach(x => x.classList.toggle('on', x === b));
+  document.querySelectorAll('.chip[data-bg]').forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b); });
   $('#pvbox').dataset.bg = b.dataset.bg;
 });
 $('#demo').onclick = () => chat && demoMsg(chat);
