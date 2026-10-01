@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Чат для OBS — Kick и Twitch с 7TV</title>
+<link rel="icon" type="image/png" href="web_icons.png?v=1">
 <style>
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -120,6 +121,29 @@ button:focus-visible,select:focus-visible,summary:focus-visible,.row input:focus
 .chat .reply{display:block;font-size:.7em;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .chat .msg.hi{outline:2px solid #ffd43b;outline-offset:-2px}
 .chat .msg.sys{background:rgba(136,68,255,.5);font-weight:600}
+
+/* ---------- компактный вид ---------- */
+#s2{max-width:1180px}
+.top{margin:0 0 8px}
+.panel{padding:2px 16px 8px;scrollbar-width:thin;scrollbar-color:#2a3042 transparent}
+.grp{margin:12px 0 0;font-size:11px}
+.row{gap:4px;padding:7px 0;font-size:13.5px}
+.row select,.row input[type=text]{padding:7px 10px;font-size:13.5px;border-radius:10px}
+.row input[type=color]{width:44px;height:26px;border-radius:8px}
+.row input[type=checkbox]{width:18px;height:18px}
+.row .val{font-size:12px}
+.hint{font-size:12px;margin:0 0 4px}
+.adv{margin-top:10px}
+.adv>summary{padding:10px 0 4px}
+#getlink{margin-top:10px;height:48px;font-size:17px}
+@media(min-width:560px){
+  .panel{display:grid;grid-template-columns:1fr 1fr;column-gap:24px;align-content:start}
+  .panel>.grp,.panel>.adv,.panel>.dbg{grid-column:1/-1}
+}
+@media(min-width:860px){
+  .panel{max-height:calc(100vh - 150px);overflow-y:auto}
+  .pvbox{height:min(560px,calc(100vh - 190px))}
+}
 </style>
 </head>
 <body>
