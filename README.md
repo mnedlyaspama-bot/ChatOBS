@@ -1,3 +1,3 @@
 # Просто сайт для OBS чата
 
-https://mnedlyaspama-bot.github.io/ChatOBS/
+https://obs-bots.github.io/ChatOBS/
