@@ -206,6 +206,39 @@ body.cfg::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none
 #s1 .cta::after{content:'';position:absolute;top:0;bottom:0;left:-40%;width:30%;transform:skewX(-20deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);transition:left .6s}
 #s1 .cta:hover::after{left:120%}
 @media(prefers-reduced-motion:reduce){body.cfg::before{animation:none;opacity:1}#s1,#s1>*,.deco i{animation:none!important}}
+
+/* ---------- заставка: пузырьки сообщений летят вверх, мягкое свечение, быстрое появление ---------- */
+body.cfg::before{background:radial-gradient(ellipse 26% 32% at 0 0,rgba(var(--rgb),.09),transparent 72%)}
+body.cfg::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 24% 30% at 100% 100%,rgba(138,180,255,.08),transparent 72%);filter:blur(30px);opacity:0;animation:aur 1.8s .3s ease-out forwards}
+.spfx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;transition:opacity .5s ease}
+.spfx.off{opacity:0}
+.fb-layer{position:absolute;inset:0;opacity:0;animation:spFade 1.6s ease .2s forwards}
+@keyframes spFade{to{opacity:1}}
+.fb{position:absolute;bottom:0;left:var(--x);will-change:transform,opacity;animation:fbUp var(--t) linear var(--dl,0s) forwards}
+@keyframes fbUp{0%{transform:translateY(50px);opacity:0}8%{opacity:.9}78%{opacity:.9}100%{transform:translateY(calc(-100vh - 140px));opacity:0}}
+.fb-in{position:relative;display:flex;align-items:center;gap:9px;width:74px;padding:9px 12px;border-radius:14px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.075);overflow:hidden;transition:width .5s cubic-bezier(.2,.9,.3,1.15);animation:fbSway var(--sw) ease-in-out infinite alternate}
+.fb.sent .fb-in{width:var(--w)}
+@keyframes fbSway{from{transform:translateX(-10px)}to{transform:translateX(10px)}}
+.fb-av{flex:none;width:14px;height:14px;border-radius:5px;background:var(--c,rgb(var(--rgb)));box-shadow:0 0 12px var(--c,rgba(var(--rgb),.4))}
+.fb-ln{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px;opacity:0;transition:opacity .3s ease .15s}
+.fb.sent .fb-ln{opacity:1}
+.fb-ln i{display:block;height:5px;border-radius:3px;background:rgba(255,255,255,.2)}
+.fb-ln i:first-child{width:30%;background:var(--c,rgb(var(--rgb)));opacity:.8}
+.fb-dots{position:absolute;left:35px;top:50%;margin-top:-2.5px;display:flex;gap:4px;transition:opacity .2s ease}
+.fb.sent .fb-dots{opacity:0}
+.fb-dots i{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.6);animation:fbDot 1s ease-in-out infinite}
+.fb-dots i:nth-child(2){animation-delay:.15s}
+.fb-dots i:nth-child(3){animation-delay:.3s}
+@keyframes fbDot{0%,100%{transform:translateY(0);opacity:.4}40%{transform:translateY(-3px);opacity:1}}
+#s1{animation:cardin .8s .05s cubic-bezier(.2,.9,.2,1) backwards}
+#s1 .tabs{animation:rise .5s .15s backwards}
+#s1 h1{animation:rise .5s .4s backwards}
+#s1 .sub{animation:rise .5s .5s backwards}
+#s1 .inrow{animation:rise .5s .6s backwards}
+#s1 .cta{animation:rise .5s .7s backwards}
+#s1 .note{animation:rise .5s .8s backwards}
+#s1 .adv{animation:rise .5s .9s backwards}
+@media(prefers-reduced-motion:reduce){body.cfg::after{animation:none;opacity:1}.fb-layer{animation:none;opacity:1}}
 </style>
 </head>
 <body>
@@ -218,7 +251,7 @@ body.cfg::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none
       <button class="tab" data-p="kick" type="button"><b>KICK</b></button>
       <button class="tab" data-p="twitch" type="button"><b>TWITCH</b></button>
     </div>
-    <div class="deco" aria-hidden="true"><i style="--w:70%;--d:.6s"></i><i style="--w:54%;--d:.78s"></i><i style="--w:82%;--d:.96s"></i></div>
+    <div class="deco" aria-hidden="true"><i style="--w:70%;--d:.25s"></i><i style="--w:54%;--d:.33s"></i><i style="--w:82%;--d:.41s"></i></div>
     <h1>Чат для OBS</h1>
     <p class="sub" id="sub"></p>
     <div class="inrow">
@@ -981,6 +1014,66 @@ $('#copy').onclick = async () => {
   catch (e) { i.select(); document.execCommand('copy'); }
   b.textContent = 'Скопировано'; setTimeout(() => b.textContent = 'Копировать', 1600);
 };
+})();
+</script>
+
+<script>
+/* заставка стартового экрана: кто-то «печатает», сообщения всплывают и улетают вверх (только в режиме настройки) */
+(function(){
+  if (!document.body.classList.contains('cfg')) return;
+  const s1 = document.getElementById('s1');
+  if (!s1 || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const fx = document.createElement('div');
+  fx.className = 'spfx'; fx.setAttribute('aria-hidden', 'true');
+  const layer = document.createElement('div');
+  layer.className = 'fb-layer';
+  fx.appendChild(layer);
+  document.body.insertBefore(fx, document.body.firstChild);
+  const COLORS = ['', '', '#ffd166', '#6fb8ff', '#ff7ab8', '#b48cff', '#7ef0c0'];
+  const rnd = (a, b) => a + Math.random() * (b - a);
+  let timer = 0;
+
+  function spawn(seed){
+    const el = document.createElement('div');
+    el.className = 'fb';
+    const dur = rnd(11, 17), wide = window.innerWidth > 900;
+    const x = wide ? (Math.random() < .5 ? rnd(2, 26) : rnd(64, 86)) : rnd(2, 66);
+    const col = COLORS[Math.floor(Math.random() * COLORS.length)];
+    el.style.setProperty('--x', x + '%');
+    el.style.setProperty('--t', dur + 's');
+    el.style.setProperty('--sw', rnd(3, 5) + 's');
+    el.style.setProperty('--w', Math.round(rnd(150, 270)) + 'px');
+    if (col) el.style.setProperty('--c', col);
+    let lines = '';
+    for (let i = 0, n = Math.random() < .45 ? 2 : 1; i < n; i++) lines += '<i style="width:' + Math.round(rnd(55, 100)) + '%"></i>';
+    el.innerHTML = '<div class="fb-in"><span class="fb-av"></span><span class="fb-dots"><i></i><i></i><i></i></span><div class="fb-ln"><i></i>' + lines + '</div></div>';
+    if (seed){
+      el.style.setProperty('--dl', -rnd(0, dur * .75) + 's');
+      el.classList.add('sent');
+    } else {
+      setTimeout(() => el.classList.add('sent'), rnd(900, 1500));
+    }
+    el.addEventListener('animationend', (e) => { if (e.target === el) el.remove(); });
+    layer.appendChild(el);
+  }
+  function loop(){
+    if (s1.hidden) return;
+    if (!document.hidden && layer.children.length < 14) spawn(false);
+    timer = setTimeout(loop, rnd(650, 1300));
+  }
+  function sync(){
+    clearTimeout(timer);
+    fx.classList.toggle('off', s1.hidden);
+    if (s1.hidden){
+      setTimeout(() => { if (s1.hidden) layer.innerHTML = ''; }, 600);
+    } else {
+      layer.innerHTML = '';
+      for (let i = 0; i < 6; i++) spawn(true);
+      timer = setTimeout(loop, 500);
+    }
+  }
+  new MutationObserver(sync).observe(s1, { attributes:true, attributeFilter:['hidden'] });
+  sync();
 })();
 </script>
 </body>
